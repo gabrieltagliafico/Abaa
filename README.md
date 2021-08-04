@@ -8,5 +8,15 @@ DESCARGAR MYSQL DATABASE =>
 
 DESCARGAR EL IDE DE TU PREFERENCIA
 
+POSTGRESS
+
+USER= postgres
+CONTRASEÑA= gabriel20
+
+SUPERUSER:
+
+USER= superuser
+CONTRASEÑA= gabriel20
+
 //////////////////////////////////////////
 ..........................................
