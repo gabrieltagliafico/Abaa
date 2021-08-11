@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'AbaaMet.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'AbaaMetrologia',
+        'NAME': 'AbaaMet',
         'USER': 'postgres',
         'PASSWORD': 'gabriel20',
         'HOST': '127.0.0.1',
-        'DATABASE_PORT': '5432',
+        'DATABASE_PORT': '5050',
     }
 }
 

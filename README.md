@@ -15,7 +15,7 @@ CONTRASEÑA= gabriel20
 
 SUPERUSER:
 
-USER= superuser
+USER= gabot
 CONTRASEÑA= gabriel20
 
 //////////////////////////////////////////
