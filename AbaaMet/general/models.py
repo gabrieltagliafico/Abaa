@@ -19,6 +19,9 @@ class Direccion(models.Model):
 class Empresa(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     razon_social = models.CharField(max_length=50)
+    def __str__(self):
+        return self.razon_social
+
 
 class Sucursal(models.Model):
     id= models.PositiveIntegerField(primary_key=True)
@@ -31,7 +34,7 @@ class Cliente(models.Model):
     nombre_completo = models.CharField(null=True,max_length=40)
     telefono = models.IntegerField()
     email= models.EmailField(max_length=254)
-    id_empresa= models.ForeignKey(Empresa,null=True, blank=False, on_delete=DO_NOTHING)
+    id_empresa= models.ForeignKey(Empresa,null=True, blank=True, on_delete=DO_NOTHING)
 
 
 
