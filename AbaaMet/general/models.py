@@ -32,7 +32,7 @@ class Cliente(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     rfc = models.CharField(null=True, max_length=30)
     nombre_completo = models.CharField(null=True,max_length=40)
-    telefono = models.IntegerField()
+    telefono = models.CharField(max_length=12)
     email= models.EmailField(max_length=254)
     id_empresa= models.ForeignKey(Empresa,null=True, blank=True, on_delete=DO_NOTHING)
 

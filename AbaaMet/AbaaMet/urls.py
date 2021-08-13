@@ -22,5 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("",views.Clientes, name="Clientes"),
     path("agregarCliente/", views.agregar, name="agregarCliente"),
+    path("agregarEmpresa/", views.agregarEmpresa, name="agregarEmpresa"),
     path("editar/<int:cliente_id>/", views.editar, name="editar"),
+    path("editarEmpresa/<int:empresa_id>/", views.editarEmpresa, name="editarEmpresa"),
+    path("empresas/", views.Empresas, name="Empresas"),
 ]
