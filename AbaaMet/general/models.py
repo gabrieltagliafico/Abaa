@@ -15,6 +15,8 @@ class Direccion(models.Model):
     estado= models.CharField(max_length=20,null=True)
     municipio= models.CharField(max_length=20, null=True)
     codigo_postal= models.PositiveIntegerField(null=False)
+    def __str__(self) -> str:
+        return self.localidad
 
 class Empresa(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
@@ -25,14 +27,17 @@ class Empresa(models.Model):
 
 class Sucursal(models.Model):
     id= models.PositiveIntegerField(primary_key=True)
-    id_direccion= models.ForeignKey(Direccion,null=False, blank=False, on_delete= DO_NOTHING)
-    id_empresa = models.ForeignKey(Empresa,null=False, blank=False, on_delete=DO_NOTHING)
+    rfc = models.CharField(null=True, max_length=30)
+    n_cliente= models.CharField(null=True, max_length=10)
+    id_direccion= models.ForeignKey(Direccion,null=True, blank=True, on_delete= DO_NOTHING)
+    id_empresa = models.ForeignKey(Empresa,null=True, blank=True, on_delete=DO_NOTHING)
+
 
 class Cliente(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
-    rfc = models.CharField(null=True, max_length=30)
     nombre_completo = models.CharField(null=True,max_length=40)
     telefono = models.CharField(max_length=12)
+    telefono_ad = models.CharField(max_length=12,null=True)
     email= models.EmailField(max_length=254)
     id_empresa= models.ForeignKey(Empresa,null=True, blank=True, on_delete=DO_NOTHING)
 

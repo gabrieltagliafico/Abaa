@@ -1,0 +1,51 @@
+{% extends 'general/layout.html'%}
+{% block content %}
+<div class="p-1 mb-1 rounded-1">
+    <div class="container-fluid py-5">
+      <h1 class="display-10 fw-bold text-center">Lista de Direcciones</h1>
+      </div>
+</div>
+<div class="container">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Numero exterior</th>
+                <th scope="col">Numero interior</th>
+                <th scope="col">Calle</th>
+                <th scope="col">Colonia</th>
+                <th scope="col">Pais</th>
+                <th scope="col">Referencia</th>
+                <th scope="col">Localidad</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Municipio</th>
+                <th scope="col">Codigo Postal</th>
+                <th scope="col">Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Direccion in Direcciones %}
+            <tr>
+                <th scope="row">{{Direccion.id}}</th>
+                <td> {{Direccion.num_exterior}}</td>
+                <td> {{Direccion.num_interior}}</td>
+                <td> {{Direccion.calle}}</td>
+                <td> {{Direccion.colonia}}</td>
+                <td> {{Direccion.pais}}</td>
+                <td> {{Direccion.referencia}}</td>
+                <td> {{Direccion.localidad}}</td>
+                <td> {{Direccion.estado}}</td>
+                <td> {{Direccion.municipio}}</td>
+                <td> {{Direccion.codigo_postal}}</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{% url 'editarDireccion' Direccion.id %}">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-success" href="{% url 'agregarDireccion' %}" role="button">+ Direccion</a>
+    </div>
+</div>
+{% endblock %}

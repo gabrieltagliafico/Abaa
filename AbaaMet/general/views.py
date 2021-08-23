@@ -13,6 +13,16 @@ def Empresas(request):
     context= {'Empresas':Empresas}
     return render(request,'general/empresas.html', context)
 
+def MostrarSucursales(request):
+    Sucursales=Sucursal.objects.all()
+    context={'Sucursales':Sucursales}
+    return render(request,'general/sucursales.html',context)
+
+def mostrarDireccion(request):
+    Direcciones=Direccion.objects.all()
+    context={'Direcciones':Direcciones}
+    return render(request,'general/direcciones.html',context)
+
 def agregar(request):
     if request.method == "POST":
         form = ClienteForm(request.POST)
@@ -23,6 +33,28 @@ def agregar(request):
         form = ClienteForm()
     context= {'form': form}
     return render(request, 'general/agregarCliente.html', context)
+
+def agregarSucursal(request):
+    if request.method == "POST":
+        form = SucursalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Sucursales')
+    else:
+        form = SucursalForm()
+    context= {'form': form}
+    return render(request, 'general/agregarSucursal.html', context)
+
+def agregarDireccion(request):
+    if request.method == "POST":
+        form = DireccionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Direcciones')
+    else:
+        form = DireccionForm()
+    context= {'form': form}
+    return render(request, 'general/agregarDireccion.html', context)
 
 def editar(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
@@ -47,6 +79,30 @@ def editarEmpresa(request, empresa_id):
         form=EmpresaForm(instance=empresa)
     context= {"form": form}
     return render(request,"general/editarEmpresa.html", context)
+
+def editarSucursal(request, sucursal_id):
+    sucursal = Sucursal.objects.get(id=sucursal_id)
+    if request.method=='POST':
+        form = SucursalForm(request.POST, instance=sucursal)
+        if form.is_valid():
+            form.save()
+            return redirect("Sucursales")
+    else:
+        form=SucursalForm(instance=sucursal)
+    context= {"form": form}
+    return render(request,"general/editarSucursal.html", context)
+
+def editarDireccion(request, direccion_id):
+    direccion = Direccion.objects.get(id=direccion_id)
+    if request.method=='POST':
+        form = DireccionForm(request.POST, instance=direccion)
+        if form.is_valid():
+            form.save()
+            return redirect("Direcciones")
+    else:
+        form=DireccionForm(instance=direccion)
+    context= {"form": form}
+    return render(request,"general/editarDireccion.html", context)
 
 def agregarEmpresa(request):
     if request.method == "POST":
