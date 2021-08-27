@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from general.models import *
 from general.forms import *
 # Create your views here.
+
 def Clientes(request):
     Clientes = Cliente.objects.all()
     context= {'Clientes':Clientes}
