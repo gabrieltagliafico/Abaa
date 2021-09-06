@@ -2,9 +2,33 @@
 from django.shortcuts import redirect, render
 from general.models import *
 from general.forms import *
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
-def Clientes(request):
+def index(request):
+    return render(request,'general/index.html')
+
+def login(request):
+    return render(request,'general/login.html')
+
+def register(request):
+    if request.method=='POST':
+        form =UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            messages.success(request, f'Usuario {username} creado')
+    else:
+        form = UserCreationForm()
+    
+    context = { 'form' : form }
+    return render(request,'general/register.html', context)
+
+
+
+
+
+""" def Clientes(request):
     Clientes = Cliente.objects.all()
     context= {'Clientes':Clientes}
     return render(request,'general/clientes.html', context)
@@ -114,4 +138,4 @@ def agregarEmpresa(request):
     else:
         form = EmpresaForm()
     context= {'form': form}
-    return render(request, 'general/agregarEmpresa.html', context)
+    return render(request, 'general/agregarEmpresa.html', context) """
