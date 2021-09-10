@@ -1,3 +1,4 @@
+from general.models import Servicio
 from general.models import Direccion
 from general.models import Sucursal
 from django.forms import fields
@@ -24,3 +25,8 @@ class DireccionForm(forms.ModelForm):
     class Meta:
         model=Direccion
         fields=['id','num_interior','num_exterior','calle','colonia','pais','referencia','localidad','estado','municipio','codigo_postal']
+
+class ServicioForm(forms.ModelForm):
+    class Meta:
+        model = Servicio
+        fields=['id','nombre','precio','detalle']

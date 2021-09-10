@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html style="height: 100%;">
 
 <head>
 	<title>Abaa Metrologia</title>
@@ -16,7 +16,7 @@
 		crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="height: 100%;">
 	<div class="px-3 py-2 m-0 bg-dark">
 		<div class="container d-flex m-0">
 			<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -28,51 +28,54 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-			<ul class="nav nav-pills flex-column mb-auto">
-				<li class="nav-item">
-					<a href="#" class="nav-link active" aria-current="page">
-						<svg class="bi me-2" width="16" height="16">
-							<use xlink:href="#home"></use>
-						</svg>
-						Vision General
-					</a>
-				</li>
-				<li>
-					<a href="#" class="nav-link text-white">
-						<svg class="bi me-2" width="16" height="16">
-							<use xlink:href="#speedometer2"></use>
-						</svg>
-						Cotizaciones
-					</a>
-				</li>
-				<li>
-					<a href="#" class="nav-link text-white">
-						<svg class="bi me-2" width="16" height="16">
-							<use xlink:href="#table"></use>
-						</svg>
-						Clientes
-					</a>
-				</li>
-				<li>
-					<a href="#" class="nav-link text-white">
-						<svg class="bi me-2" width="16" height="16">
-							<use xlink:href="#grid"></use>
-						</svg>
-						Productos y Servicios
-					</a>
-				</li>
-			</ul>
-		</div>
-		<div class="col">
-			{% block content %}
-			{% endblock %}
+	<div class="col w-100" style="height: 100%;">
 
+		<div class="row" style="height: 100%;">
+			<div class="d-flex flex-column  p-3 text-white bg-dark" style="width: 280px;">
+				<ul class="nav nav-pills flex-column mb-auto">
+					<li class="nav-item">
+						<a href="#" class="nav-link text-white collapsed" aria-current="page"  >
+							<svg class="bi me-2" width="16" height="16">
+								<use xlink:href="#home"></use>
+							</svg>
+							Vision General
+						</a>
+					</li>
+					<li>
+						<a href="#" class="nav-link text-white">
+							<svg class="bi me-2" width="16" height="16">
+								<use xlink:href="#speedometer2"></use>
+							</svg>
+							Cotizaciones
+						</a>
+					</li>
+					<li>
+						<a href="#" class="nav-link text-white">
+							<svg class="bi me-2" width="16" height="16">
+								<use xlink:href="#table"></use>
+							</svg>
+							Clientes
+						</a>
+					</li>
+					<li>
+						<a href="#" class="nav-link text-white">
+							<svg class="bi me-2" width="16" height="16">
+								<use xlink:href="#grid"></use>
+							</svg>
+							Productos y Servicios
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col ">
+				{% block content %}
+				{% endblock %}
+
+			</div>
 		</div>
+
+
 	</div>
-
-
 
 	<script src="/docs/5.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
