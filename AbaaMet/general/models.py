@@ -42,9 +42,6 @@ class Cliente(models.Model):
     id_empresa= models.ForeignKey(Empresa,null=True, blank=True, on_delete=DO_NOTHING)
 
 
-
-
-
 class Servicio(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     nombre = models.CharField(max_length=50)

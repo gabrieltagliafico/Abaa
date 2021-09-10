@@ -1,6 +1,6 @@
 
 from django.shortcuts import redirect, render
-from general.models import *
+from general.models import Servicio
 from general.forms import *
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -24,6 +24,10 @@ def register(request):
     context = { 'form' : form }
     return render(request,'general/register.html', context)
 
+def servicios(request):
+    servicios = Servicio.objects.all()
+    context = {'servicios': servicios}
+    return render(request,'general/servicios.html',context)
 
 
 
