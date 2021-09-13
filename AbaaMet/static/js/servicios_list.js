@@ -10,8 +10,7 @@ $(function () {
       url: '/principal/',
       headers:{'X-CSRFToken':csrftoken},
       type: 'POST',
-      data:{'hola':String,csrfmiddlewaretoken: '{{ csrf_token }}'},
-      dataType: 'json',
+      data:{csrfmiddlewaretoken: '{{ csrf_token }}'},
       success:function(response){
         console.log(data)
       }

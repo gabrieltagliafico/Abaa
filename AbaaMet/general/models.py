@@ -48,6 +48,7 @@ class Servicio(models.Model):
     nombre = models.CharField(max_length=50, verbose_name='nombre')
     precio = models.PositiveIntegerField(verbose_name='precio')
     detalle = models.CharField(max_length=254, verbose_name='detalle')
+    activo= models.BooleanField(verbose_name='activo')
     def __str__(self):
         return self.nombre
     class Meta:

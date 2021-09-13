@@ -21,7 +21,7 @@ def serviciodef(request):
 class ServicioListView(ListView):
     model = Servicio
     template_name='servicios/servicios.html'
-    
+
 
     def post(self, request, *args, **kwargs):
         data={'name': 'william',}
