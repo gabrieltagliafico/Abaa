@@ -2,7 +2,7 @@
 {% block content %}
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <main class="col ms-sm-auto px-md-4">
-    <div class="container mb-4 p-3"><h2 class="vstack" style="text-align: center;">Todos los clientes registrados</h2></div>
+    <div class="container mb-4 p-3"><h2 class="vstack" style="text-align: center;">Servicios Disponibles</h2></div>
     <!-- <div class="table-responsive" >
         <table class="table table-hover">
             <thead>
@@ -42,7 +42,20 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>                           
+            <tbody>
+                {% for servicio in servicios %}
+                <tr>
+                    <td>{{ servicio.id }}</td>
+                    <td>{{ servicio.nombre}}</td>
+                    <td>{{ servicio.precio }}</td>
+                    <td>{{ servicio.detalle }}</td>
+                    <td> <div class="btn-group" role="group" style="align-items: center;">
+                        <button type="button" class="btn btn-outline-primary">Editar</button>
+                        <button type="button" class="btn btn-outline-primary">Borrar</button>
+                      </div>
+                    </td>
+                </tr>
+                {% endfor %}                           
             </tbody>        
         </table>               
     </div>
