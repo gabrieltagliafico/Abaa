@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<body class="hold-transition sidebar-mini sidebar-collapse">
+    {% include 'header.html' %}
+    {% include 'sidebar.html' %}
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+
+
+        <div class="content-wrapper">
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+        {% include 'footer.html' %}
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    {% block javascript %}
+    {% endblock %}
+    <!-- ./wrapper -->
+</body>
+{% endblock %}

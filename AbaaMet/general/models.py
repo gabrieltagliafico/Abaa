@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.deletion import DO_NOTHING
+from django.db.models.fields import EmailField
 
 # Create your models here.
 
@@ -34,19 +35,49 @@ class Sucursal(models.Model):
 
 
 class Cliente(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
-    nombre_completo = models.CharField(null=True,max_length=40)
-    telefono = models.CharField(max_length=12)
-    telefono_ad = models.CharField(max_length=12,null=True)
-    email= models.EmailField(max_length=254)
-    id_empresa= models.ForeignKey(Empresa,null=True, blank=True, on_delete=DO_NOTHING)
+    id = models.PositiveIntegerField(primary_key=True, verbose_name='id')
+    nombre_completo = models.CharField(null=True,max_length=40, verbose_name='nombre')
+    telefono = models.CharField(max_length=12, verbose_name='telefono')
+    telefono_ad = models.CharField(max_length=12,null=True, verbose_name='telefono_ad')
+    email= models.EmailField(max_length=254, verbose_name='email')
+    id_empresa= models.ForeignKey(Empresa,null=True, blank=True, on_delete=DO_NOTHING, verbose_name='empresa')
 
 
 class Servicio(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
-    nombre = models.CharField(max_length=50)
-    precio = models.PositiveIntegerField()
-    detalle = models.CharField(max_length=254)
+    id = models.PositiveIntegerField(primary_key=True, verbose_name='id')
+    nombre = models.CharField(max_length=50, verbose_name='nombre')
+    precio = models.PositiveIntegerField(verbose_name='precio')
+    detalle = models.CharField(max_length=254, verbose_name='detalle')
+    def __str__(self):
+        return self.nombre
+    class Meta:
+        verbose_name='Servicio'
+        verbose_name_plural='Servicios'
+        db_table='servicio'
+        ordering= ['id']
+
+class Cargo(models.Model):
+    id=models.PositiveIntegerField(primary_key=True, verbose_name='id')
+    nombre=models.CharField(max_length=100, verbose_name='cargo')
+    def __str__(self):
+        return self.nombre
+    class Meta:
+        verbose_name='Cargo'
+        verbose_name_plural='Cargos'
+        db_table='cargo'
+        ordering=['id']
+
+class Usuario(models.Model):
+    id= models.PositiveIntegerField(primary_key=True, verbose_name='id')
+    email= models.EmailField(verbose_name='email')
+    cargo= models.ForeignKey(Cargo,null=False, blank=False,on_delete=DO_NOTHING, verbose_name='cargo')
+    def __str__(self):
+        return self.email
+    class Meta:
+        verbose_name='Usuario'
+        verbose_name_plural='Usuarios'
+        db_table='usuarios'
+        ordering=['id']
 
 
 

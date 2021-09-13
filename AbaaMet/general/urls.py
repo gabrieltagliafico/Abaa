@@ -1,10 +1,12 @@
-
-from django.urls.conf import include
-from general import views
+from general.views.login.views import login
 from django.urls import path
+from general.views.servicios.views import *
+
+app_name='general'
 
 urlpatterns = [
-    path('',views.login, name='login'),
-    path('principal/', views.index, name='inicio'),
-    path('servicios/', views.servicios, name='servicios')
+   path('', login, name='login'),
+   path('principal/', serviciodef ,name='Serviciodef'),
+   path('principal1/', ServicioListView.as_view(), name='ServicioListView')
 ]
+""" ServicioListView.as_view() """
