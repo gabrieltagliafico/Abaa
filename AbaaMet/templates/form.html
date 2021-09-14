@@ -1,0 +1,77 @@
+{% extends 'body.html' %}
+
+{% block content %}
+<form method="POST">
+    <div class="card card-default p-3 m-3">
+        <div class="card-header">
+            <h1 class="card-title">
+                {{ title }}
+            </h1>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <label for="email">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary btn-flat btnTest">
+                <i class="fas fa-plus"></i> Guardar registro
+            </button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    '{% if form.errors %}'
+    var errores = '';
+    '{% for field in form %}'
+    '{% for error in field.errors %}'
+    errores += '{{ error }}\n';
+    '{% endfor %}'
+    '{% endfor %}'
+    Swal.fire({
+        title: 'Error!',
+        text: errores,
+        icon: 'error',
+    })
+    '{% else %}'
+    $(function () {
+        $('form').on('submit', function (e) {
+            Swal.fire(
+                'Felicitaciones!',
+                'Se ha agregado correctamente',
+                'success'
+            )
+            e.preventDefault();
+            var parameters= $(this).serializeArray();
+            console.log(parameters);
+            /* $.ajax({
+                url: '/principal/',
+                headers: { 'X-CSRFToken': csrftoken },
+                type: 'POST',
+                data: { csrfmiddlewaretoken: '{{ csrf_token }}' },
+                success: function (response) {
+                    console.log(data)
+                }
+            }); */
+        });
+    })
+    '{% endif %}'
+
+</script>
+
+
+
+
+{% endblock content %}

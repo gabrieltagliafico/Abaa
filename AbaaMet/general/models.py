@@ -44,11 +44,11 @@ class Cliente(models.Model):
 
 
 class Servicio(models.Model):
-    id = models.PositiveIntegerField(primary_key=True, verbose_name='id')
-    nombre = models.CharField(max_length=50, verbose_name='nombre')
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=50,unique=True ,verbose_name='nombre')
     precio = models.PositiveIntegerField(verbose_name='precio')
-    detalle = models.CharField(max_length=254, verbose_name='detalle')
-    activo= models.BooleanField(verbose_name='activo')
+    detalle = models.TextField( verbose_name='detalle')
+    activo= models.BooleanField(verbose_name='activo', default=True)
     def __str__(self):
         return self.nombre
     class Meta:
