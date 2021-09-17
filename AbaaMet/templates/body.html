@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% load static %}
 {% block body %}
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -24,6 +25,7 @@
         <!-- /.control-sidebar -->
     </div>
     {% block javascript %}
+    <script src="{% static 'js/functions.js' %}"></script>
     {% endblock %}
     <!-- ./wrapper -->
 </body>

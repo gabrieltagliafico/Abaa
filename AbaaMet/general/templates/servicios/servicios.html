@@ -12,19 +12,21 @@
 
 {% block rows %}
 {% for s in object_list %}
+{% if s.activo == True %}
 <tr style="text-align: center;">
     <td>{{ s.id }}</td>
     <td>{{ s.nombre }}</td>
     <td style="text-align: end;">{{ s.precio }}</td>
     <td>{{ s.detalle }}</td>
     <td>
-        <button type="button" class="btn btn-warning btn-xs btn-flat">
+        <a href="{% url 'general:ServicioUpdateViewpath' s.id %}" type="button" class="btn btn-warning btn-xs btn-flat">
             <i class="fas fa-edit"></i>
-        </button>
+        </a>
         <button type="button" class="btn btn-danger btn-xs btn-flat">
             <i class="fas fa-trash-alt"></i>
         </button>
     </td>
 </tr>
+{% endif %}
 {% endfor %}
 {% endblock rows %}

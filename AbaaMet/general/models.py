@@ -45,7 +45,7 @@ class Cliente(models.Model):
 
 class Servicio(models.Model):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=50,unique=True ,verbose_name='nombre')
+    nombre = models.CharField(max_length=50,verbose_name='nombre')
     precio = models.PositiveIntegerField(verbose_name='precio')
     detalle = models.TextField( verbose_name='detalle')
     activo= models.BooleanField(verbose_name='activo', default=True)

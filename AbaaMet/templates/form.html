@@ -10,6 +10,7 @@
         </div>
         <div class="card-body">
             {% csrf_token %}
+            <input type="hidden" name="action" value="{{ action }}">
             {% for field in form.visible_fields %}
             <div class="form-group">
                 <div class="row">
@@ -45,30 +46,30 @@
         text: errores,
         icon: 'error',
     })
-    '{% else %}'
-    $(function () {
-        $('form').on('submit', function (e) {
-            Swal.fire(
-                'Felicitaciones!',
-                'Se ha agregado correctamente',
-                'success'
-            )
-            e.preventDefault();
-            var parameters= $(this).serializeArray();
-            console.log(parameters);
-            /* $.ajax({
-                url: '/principal/',
-                headers: { 'X-CSRFToken': csrftoken },
-                type: 'POST',
-                data: { csrfmiddlewaretoken: '{{ csrf_token }}' },
-                success: function (response) {
-                    console.log(data)
-                }
-            }); */
-        });
-    })
     '{% endif %}'
+    $('form').on('submit', function (e) {
 
+        e.preventDefault();
+        var parameters = $(this).serializeArray();
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: parameters,
+            dataType: 'json',
+        }).done(function (data) {
+            if (!data.hasOwnProperty('error')) {
+                Swal.fire(
+                    'Felicitaciones!',
+                    'Se ha agregado correctamente',
+                    'success'
+                )
+                location.href = '{{ list_url }}';
+               
+                return false;
+            }
+            message_errors(data.error);
+        });
+    });
 </script>
 
 
