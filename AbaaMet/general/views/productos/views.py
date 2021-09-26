@@ -1,4 +1,3 @@
-
 import json
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -8,7 +7,6 @@ from general.forms import *
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.utils.decorators import method_decorator
-
 
 
 class ServicioListView(ListView):

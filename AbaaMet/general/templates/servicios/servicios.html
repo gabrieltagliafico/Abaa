@@ -1,6 +1,5 @@
-{% extends 'list.html' %}
-
-{% block columns %}
+{% extends 'list.html' %} {% load static %} {% block head_list %}
+<script src="{% static 'Servicios\js\list.js' %}"></script>{% endblock head_list %} {% block columns %}
 <tr style="text-align: center;">
     <th scope="col" style="width: 5%;">Nro</th>
     <th scope="col" style="width: 35%;">Nombre</th>
@@ -8,11 +7,8 @@
     <th scope="col" style="width: 30%;">Detalle</th>
     <th scope="col" style="width: 10%;">Accion</th>
 </tr>
-{% endblock columns %}
-
-{% block rows %}
-{% for s in object_list %}
-{% if s.activo == True %}
+{% endblock columns %} {% block rows %}
+<!-- {% for s in object_list %} 
 <tr style="text-align: center;">
     <td>{{ s.id }}</td>
     <td>{{ s.nombre }}</td>
@@ -27,6 +23,5 @@
         </button>
     </td>
 </tr>
-{% endif %}
-{% endfor %}
-{% endblock rows %}
+ {% endfor %} -->
+{% endblock rows %} {% block javascript %} {% endblock %}
