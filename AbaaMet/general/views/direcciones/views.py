@@ -11,9 +11,9 @@ from django.utils.decorators import method_decorator
 
 
 
-class ServicioListView(ListView):
-    model = Servicio
-    template_name='servicios/servicios.html'
+class DireccionesListView(ListView):
+    model = Direccion
+    template_name='direcciones/direcciones.html'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -25,7 +25,7 @@ class ServicioListView(ListView):
             action= request.POST['action']
             if action == 'searchdata':
                 data=[]
-                for i in Servicio.objects.all():
+                for i in Direccion.objects.all():
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -36,28 +36,28 @@ class ServicioListView(ListView):
     
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
-        context['title']='Lista de Servicios'
-        context['create_url']= reverse_lazy('general:ServicioCreateViewpath')
+        context['title']='Lista de Direcciones'
+        context['create_url']= reverse_lazy('general:DireccionesCreateViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
+        context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
-        context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
-        context['entity']= 'Servicios'
+        context['entity']= 'Direcciones'
         return context
 
-class ServicioCreateView(CreateView):
-    model=Servicio
-    form_class= ServicioForm
-    template_name='servicios/create.html'
-    success_url= reverse_lazy('general:ServicioListViewpath')
+class DireccionesCreateView(CreateView):
+    model=Direccion
+    form_class= DireccionesForm
+    template_name='direcciones/create.html'
+    success_url= reverse_lazy('general:DireccionesListViewpath')
     
     def post(self, request, *args, **kwargs):
         data={}
         try:
             action= request.POST['action']
             if action == 'add':
-                form= ServicioForm(request.POST)
+                form= DireccionesForm(request.POST)
                 data= form.save()
             else:
                 data['error']='No ha ingresado a ninguna opcion'
@@ -67,9 +67,9 @@ class ServicioCreateView(CreateView):
     
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
-        context['title']='Creacion de un servicio'
-        context['entity']= 'Servicios'
-        context['list_url']= reverse_lazy('general:ServicioListViewpath')
+        context['title']='Creacion de una Direccion'
+        context['entity']= 'Direcciones'
+        context['list_url']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
@@ -78,11 +78,11 @@ class ServicioCreateView(CreateView):
         context['action']='add'
         return context
 
-class ServicioUpdateView(UpdateView):
-    model=Servicio
-    form_class= ServicioForm
-    template_name='servicios/create.html'
-    success_url= reverse_lazy('general:ServicioListViewpath')
+class DireccionesUpdateView(UpdateView):
+    model= Direccion
+    form_class= DireccionesForm
+    template_name='direcciones/create.html'
+    success_url= reverse_lazy('general:DireccionesListViewpath')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -90,9 +90,9 @@ class ServicioUpdateView(UpdateView):
     
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
-        context['title']='Edicion de un servicio'
-        context['entity']= 'Servicios'
-        context['list_url']= reverse_lazy('general:ServicioListViewpath')
+        context['title']='Edicion de una Direccion'
+        context['entity']= 'Direcciones'
+        context['list_url']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')

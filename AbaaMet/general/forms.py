@@ -1,10 +1,45 @@
-from general.models import Producto
-from general.models import Servicio
-from general.models import Direccion
-from general.models import Sucursal
+
 from django.forms import *
-from general.models import Cliente, Empresa
+from general.models import *
 from django import forms
+
+
+class DireccionesForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs["class"] = "form-control"
+        self.fields["pais"].widget.attrs[
+            "placeholder"
+        ] = "Ingrese el pais"
+        self.fields["estado"].widget.attrs["placeholder"] = "Indique el estado"
+        self.fields["municipio"].widget.attrs["placeholder"] = "Indique un municipio"
+        self.fields["localidad"].widget.attrs["placeholder"] = "Indique su localidad"
+        self.fields["referencia"].widget.attrs["placeholder"] = "Diga un lugar de referencia"
+        self.fields["colonia"].widget.attrs["placeholder"] = "Indique su colonia"
+        self.fields["calle"].widget.attrs["placeholder"] = "Diga su calle"
+        self.fields["num_interior"].widget.attrs["placeholder"] = "Indique su numero interior"
+        self.fields["num_exterior"].widget.attrs["placeholder"] = "Indique su numero exterior"
+        self.fields["codigo_postal"].widget.attrs["placeholder"] = "Indique su codigo postal"
+        self.fields["codigo_postal"].widget.attrs["cols"] = 5
+        self.fields["codigo_postal"].widget.attrs["rows"] = 5
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data["error"] = form.errors
+        except Exception as e:
+            data["error"] = str(e)
+        return data
+
+    class Meta:
+        model = Direccion
+        fields = "__all__"
+        labels = {"pais": "Pais", "estado": "Estado","municipio": "Municipio","localidad": "Localidad", "referencia": "Referencia", "colonia": "Colonia", "calle": "Calle", "num_interior": "Numero interior", "num_exterior": "Numero exterior", "codigo_postal": "Codigo Postal"}
 
 
 class ClienteForm(ModelForm):
@@ -101,3 +136,32 @@ class ServicioForm(ModelForm):
         model = Servicio
         fields = "__all__"
         labels = {"nombre": "Nombre", "precio": "Precio", "detalle": "Detalle"}
+
+
+class EmpresaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs["class"] = "form-control"
+        self.fields["razon_social"].widget.attrs[
+            "placeholder"
+        ] = "Ingrese el nombre de la empresa"
+        self.fields["razon_social"].widget.attrs["cols"] = 3
+        self.fields["razon_social"].widget.attrs["rows"] = 3
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data["error"] = form.errors
+        except Exception as e:
+            data["error"] = str(e)
+        return data
+
+    class Meta:
+        model = Empresa
+        fields = "__all__"
+        labels = {"razon_social": "Razon social"}

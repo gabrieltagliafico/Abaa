@@ -40,6 +40,8 @@ class ClienteListView(ListView):
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
+        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
+        context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['entity']= 'Clientes'
         return context
 
@@ -71,6 +73,9 @@ class ClienteCreateView(CreateView):
         context['list_url_prod']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
+        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
+        context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
+
         context['action']='add'
         return context
 
@@ -91,6 +96,8 @@ class ClienteUpdateView(UpdateView):
         context['list_url']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_prod']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
+        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
+        context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['action']='edit'
         return context
