@@ -1,5 +1,5 @@
 $(function() {
-    $('#datatableprod').DataTable({
+    $('#datatable').DataTable({
         responsive: true,
         autoWidth: false,
         destroy: true,
@@ -13,9 +13,9 @@ $(function() {
         columns: [
             { "data": "id" },
             { "data": "nombre" },
-            { "data": "precio" },
             { "data": "marca" },
             { "data": "modelo" },
+            { "data": "precio" },
             { "data": "detalle" },
             { "data": "activo" },
         ],
@@ -30,19 +30,19 @@ $(function() {
                 }
             },
             {
-                targets: [1],
-                class: 'text-center',
-                orderable: false,
-                render: function(data, type, row) {
-                    return row.nombre;
-                }
-            },
-            {
                 targets: [0],
                 class: 'text-center',
                 orderable: false,
                 render: function(data, type, row) {
                     return row.id;
+                }
+            },
+            {
+                targets: [1],
+                class: 'text-center',
+                orderable: false,
+                render: function(data, type, row) {
+                    return row.nombre;
                 }
             },
             {
@@ -58,10 +58,25 @@ $(function() {
                 class: "text-center",
                 orderable: false,
                 render: function(data, type, row) {
-                    return row.precio;
+                    return row.marca;
                 }
             },
-
+            {
+                targets: [4],
+                class: "text-center",
+                orderable: false,
+                render: function(data, type, row) {
+                    return row.modelo;
+                }
+            },
+            {
+                targets: [5],
+                class: "text-center",
+                orderable: false,
+                render: function(data, type, row) {
+                    return row.detalle;
+                }
+            },
 
         ],
         initComplete: function(settings, json) {

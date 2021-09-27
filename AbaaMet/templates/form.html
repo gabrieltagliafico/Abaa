@@ -1,6 +1,4 @@
-{% extends 'body.html' %}
-
-{% block content %}
+{% extends 'body.html' %} {% block content %}
 <form method="POST">
     <div class="card card-default p-3 m-3">
         <div class="card-header">
@@ -10,14 +8,12 @@
         </div>
         <div class="card-body">
             {% csrf_token %}
-            <input type="hidden" name="action" value="{{ action }}">
-            {% for field in form.visible_fields %}
+            <input type="hidden" name="action" value="{{ action }}"> {% for field in form.visible_fields %}
             <div class="form-group">
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-4">
-                        <label for="email">{{ field.label }}</label>
-                        {{ field }}
+                        <label for="email">{{ field.label }}</label> {{ field }}
                     </div>
                     <div class="col-4"></div>
                 </div>
@@ -47,7 +43,7 @@
         icon: 'error',
     })
     '{% endif %}'
-    $('form').on('submit', function (e) {
+    $('form').on('submit', function(e) {
 
         e.preventDefault();
         var parameters = $(this).serializeArray();
@@ -56,7 +52,7 @@
             type: 'POST',
             data: parameters,
             dataType: 'json',
-        }).done(function (data) {
+        }).done(function(data) {
             if (!data.hasOwnProperty('error')) {
                 Swal.fire(
                     'Felicitaciones!',
@@ -64,7 +60,7 @@
                     'success'
                 )
                 location.href = '{{ list_url }}';
-               
+
                 return false;
             }
             message_errors(data.error);

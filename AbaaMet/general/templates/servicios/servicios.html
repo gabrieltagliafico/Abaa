@@ -7,21 +7,4 @@
     <th scope="col" style="width: 30%;">Detalle</th>
     <th scope="col" style="width: 10%;">Accion</th>
 </tr>
-{% endblock columns %} {% block rows %}
-<!-- {% for s in object_list %} 
-<tr style="text-align: center;">
-    <td>{{ s.id }}</td>
-    <td>{{ s.nombre }}</td>
-    <td style="text-align: end;">{{ s.precio }}</td>
-    <td>{{ s.detalle }}</td>
-    <td>
-        <a href="{% url 'general:ServicioUpdateViewpath' s.id %}" type="button" class="btn btn-warning btn-xs btn-flat">
-            <i class="fas fa-edit"></i>
-        </a>
-        <button type="button" class="btn btn-danger btn-xs btn-flat">
-            <i class="fas fa-trash-alt"></i>
-        </button>
-    </td>
-</tr>
- {% endfor %} -->
-{% endblock rows %} {% block javascript %} {% endblock %}
+{% endblock columns %} {% block rows %} {% endblock rows %} {% block javascript %} {% endblock %}
