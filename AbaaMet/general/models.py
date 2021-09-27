@@ -7,7 +7,7 @@ from django.shortcuts import render
 # Create your models here.
 
 class Direccion(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     num_interior= models.IntegerField(null=True,verbose_name='num_interior')
     num_exterior= models.IntegerField(null=True,verbose_name='num_exterior')
     calle= models.CharField(null=True, max_length=50,verbose_name='calle')
@@ -18,14 +18,14 @@ class Direccion(models.Model):
     estado= models.CharField(max_length=20,null=True,verbose_name='estado')
     municipio= models.CharField(max_length=20, null=True,verbose_name='municipio')
     codigo_postal= models.PositiveIntegerField(null=False,verbose_name='codigo_postal')
-    def __str__(self) -> str:
+    def __str__(self):
         return self.localidad
     def toJSON(self):
         item= model_to_dict(self)
         return item
 
 class Empresa(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     razon_social = models.CharField(max_length=50,verbose_name='razon_social')
     def __str__(self):
         return self.razon_social
@@ -35,7 +35,7 @@ class Empresa(models.Model):
 
 
 class Sucursal(models.Model):
-    id= models.PositiveIntegerField(primary_key=True)
+    id= models.AutoField(primary_key=True)
     rfc = models.CharField(null=True, max_length=30,verbose_name='rfc')
     n_cliente= models.CharField(null=True, max_length=10,verbose_name='n_cliente')
     id_direccion= models.ForeignKey(Direccion,null=True, blank=True, on_delete= DO_NOTHING,verbose_name='direccion')
@@ -48,12 +48,12 @@ class Sucursal(models.Model):
 
 
 class Cliente(models.Model):
-    id = models.PositiveIntegerField(primary_key=True, verbose_name='id')
-    nombre_completo = models.CharField(null=True,max_length=40, verbose_name='nombre')
-    telefono = models.CharField(max_length=12, verbose_name='telefono')
-    telefono_ad = models.CharField(max_length=12,null=True, verbose_name='telefono_ad')
-    email= models.EmailField(max_length=254, verbose_name='email')
-    id_sucursal= models.ForeignKey(Sucursal,null=True, blank=True, on_delete=DO_NOTHING, verbose_name='sucursal')
+    id = models.AutoField(primary_key=True)
+    nombre_completo = models.CharField(null=True,max_length=40,verbose_name='nombre_completo')
+    telefono = models.CharField(max_length=12,verbose_name='telefono')
+    telefono_ad = models.CharField(max_length=12,null=True,verbose_name='telefono_ad')
+    email= models.EmailField(max_length=254,verbose_name='email')
+    id_sucursal= models.ForeignKey(Sucursal,null=True, blank=True, on_delete=DO_NOTHING,verbose_name='id_sucursal')
     def __str__(self):
         return self.nombre_completo
     def toJSON(self):

@@ -37,7 +37,9 @@ class ProductoListView(ListView):
         context= super().get_context_data(**kwargs)
         context['title']='Lista de Productos'
         context['create_url']= reverse_lazy('general:ProductoCreateViewpath')
+        context['list_url']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
+        context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
         context['entity']= 'Productos'
         return context
@@ -66,7 +68,9 @@ class ProductoCreateView(CreateView):
         context= super().get_context_data(**kwargs)
         context['title']='Creacion de un Producto'
         context['entity']= 'Productos'
+        context['list_url']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
+        context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
         context['action']='add'
         return context
@@ -85,7 +89,9 @@ class ProductoUpdateView(UpdateView):
         context= super().get_context_data(**kwargs)
         context['title']='Edicion de un Producto'
         context['entity']= 'Productos'
+        context['list_url']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
+        context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
         context['action']='edit'
         return context

@@ -1,10 +1,9 @@
-from general.views.productos.views import ProductoUpdateView
-from general.views.productos.views import ProductoListView
+from general.views.clientes.views import *
 from general.views.login.views import login
 from django.urls import path
 from general.views.servicios.views import *
 from general.views.landing.views import *
-from general.views.productos.views import ProductoCreateView
+from general.views.productos.views import *
 app_name='general'
 
 urlpatterns = [
@@ -16,6 +15,9 @@ urlpatterns = [
    path('principal/productos', ProductoListView.as_view(), name='ProductoListViewpath'),
    path('principal/productos/create/', ProductoCreateView.as_view(), name='ProductoCreateViewpath'),
    path('principal/productos/edit/<int:pk>/', ProductoUpdateView.as_view(), name='ProductoUpdateViewpath'),
+   path('principal/clientes', ClienteListView.as_view(), name='ClienteListViewpath'),
+   path('principal/clientes/create/', ClienteCreateView.as_view(), name='ClienteCreateViewpath'),
+   path('principal/clientes/edit/<int:pk>/', ClienteUpdateView.as_view(), name='ClienteUpdateViewpath'),
 
 
 ]
