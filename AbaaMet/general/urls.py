@@ -10,7 +10,7 @@ app_name='general'
 
 urlpatterns = [
    path('', login, name='login'),
-   path('principal/', landingView , name='LandingPath'),
+   path('principal/', LandingListView.as_view() , name='LandingPath'),
    path('principal/servicios', ServicioListView.as_view(), name='ServicioListViewpath'),
    path('principal/servicios/create/', ServicioCreateView.as_view(), name='ServicioCreateViewpath'),
    path('principal/servicios/edit/<int:pk>/', ServicioUpdateView.as_view(), name='ServicioUpdateViewpath'),
