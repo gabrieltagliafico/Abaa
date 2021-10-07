@@ -37,7 +37,6 @@ class Empresa(models.Model):
 class Sucursal(models.Model):
     id= models.AutoField(primary_key=True)
     rfc = models.CharField(null=True, max_length=30,verbose_name='rfc')
-    n_cliente= models.CharField(null=True, max_length=10,verbose_name='n_cliente')
     id_direccion= models.ForeignKey(Direccion,null=True, blank=True, on_delete= DO_NOTHING,verbose_name='direccion')
     id_empresa = models.ForeignKey(Empresa,null=True, blank=True, on_delete=DO_NOTHING,verbose_name='empresa')
     def __str__(self):
@@ -60,7 +59,49 @@ class Cliente(models.Model):
         item= model_to_dict(self)
         return item
     
+class Recepcion(models.Model):
+    Paqueteria = 'PA'
+    AbaaRecogio = 'AB'
+    ClienteEntrego = 'CE'
+    modoChoices = [
+        (Paqueteria, 'Paqueteria'),
+        (AbaaRecogio, 'AbaaRecogio'),
+        (ClienteEntrego, 'ClienteEntrego'),
+    ]
+    Devuelto = 'DE'
+    Pendiente = 'PE'
+    Aprobado = 'AP'
+    estatusChoices = [
+        (Devuelto, 'Devuelto'),
+        (Pendiente, 'Pendiente'),
+        (Aprobado, 'Aprobado'),
+    ]
 
+
+    n_entrada = models.AutoField(primary_key=True,verbose_name='n_entrada')
+    nombre = models.CharField(max_length=50,verbose_name='nombre')
+    marca = models.CharField(max_length=50,verbose_name='marca')
+    modelo = models.CharField(max_length=50,verbose_name='model')
+    serie = models.CharField( verbose_name='detalle',max_length=15)
+    identificacion= models.CharField(verbose_name='identificacion',max_length=10)
+    descripcion_particular = models.CharField(verbose_name='descripcion_particular',max_length=25)
+    fecha_de_recepcion = models.DateField(verbose_name='fecha_de_recepcion')
+    modo=models.CharField(choices=modoChoices,max_length=15)
+    cliente= models.ForeignKey(Cliente,verbose_name='cliente',on_delete= DO_NOTHING)
+    estatus= models.CharField(choices=estatusChoices, max_length=15)
+    orden_compra= models.CharField(max_length=15, verbose_name='orden_ compra')
+    n_cotizacion= models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.nombre
+    def toJSON(self):
+        item= model_to_dict(self)
+        return item
+    class Meta:
+        verbose_name='Recepciones'
+        verbose_name_plural='Recepciones'
+        db_table='g_recepcion'
+        ordering= ['n_entrada']
 
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
