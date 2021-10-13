@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'general'
+    'general',
+    'login',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'AbaaMet.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates'), os.path.join(BASE_DIR,'general/templates')],
+        'DIRS': [os.path.join(BASE_DIR,'templates'), os.path.join(BASE_DIR,'general/templates'),os.path.join(BASE_DIR,'login/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

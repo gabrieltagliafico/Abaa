@@ -4,6 +4,44 @@ from general.models import *
 from django import forms
 
 
+class RecepcionForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs["class"] = "form-control"
+        self.fields["nombre"].widget.attrs["placeholder"] = "Indique el nombre"
+        self.fields["marca"].widget.attrs["placeholder"] = "Indique la marca"
+        self.fields["modelo"].widget.attrs["placeholder"] = "Indique el modelo"
+        self.fields["serie"].widget.attrs["placeholder"] = "Diga un lugar de referencia"
+        self.fields["identificacion"].widget.attrs["placeholder"] = "identificacion"
+        self.fields["descripcion_particular"].widget.attrs["placeholder"] = "Descripcion"
+        self.fields["fecha_de_recepcion"].widget.attrs["placeholder"] = "Fecha"
+        self.fields["modo"].widget.attrs["placeholder"] = "Indique el modo"
+        self.fields["cliente"].widget.attrs["placeholder"] = "Indique Cliente"
+        self.fields["estatus"].widget.attrs["placeholder"] = "Estatus"
+        self.fields["orden_compra"].widget.attrs["placeholder"] = "Indique su orden de compra"
+        self.fields["n_cotizacion"].widget.attrs["placeholder"] = "Indique su numero de cotizacion"
+        self.fields["n_cotizacion"].widget.attrs["cols"] = 5
+        self.fields["n_cotizacion"].widget.attrs["rows"] = 5
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data["error"] = form.errors
+        except Exception as e:
+            data["error"] = str(e)
+        return data
+
+    class Meta:
+        model = Recepcion
+        fields = "__all__"
+        labels = {"Numero de entrada": "n_entrada", "nombre": "Nombre","marca": "Marca","modelo": "Modelo", "serie": "Serie", "identificacion": "Identificacion", "Descripcion": "descripcion_particular", "fecha_de_recepcion": "Fecha", "modo": "Modo", "cliente": "Cliente","estatus":"Estatus","orden_compra":"Orden de Compra","n_cotizacion":"Numero de cotizacion"}
+
+
 class DireccionesForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -37,6 +37,7 @@ class DireccionesListView(ListView):
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
         context['title']='Lista de Direcciones'
+        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
         context['create_url']= reverse_lazy('general:DireccionesCreateViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
@@ -71,6 +72,7 @@ class DireccionesCreateView(CreateView):
         context['entity']= 'Direcciones'
         context['list_url']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
+        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
@@ -95,6 +97,7 @@ class DireccionesUpdateView(UpdateView):
         context['list_url']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
+        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')

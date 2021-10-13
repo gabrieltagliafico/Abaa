@@ -1,3 +1,4 @@
+
 import json
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -9,9 +10,10 @@ from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.utils.decorators import method_decorator
 
 
-class ClienteListView(ListView):
-    model = Cliente
-    template_name='clientes/clientes.html'
+
+class RecepcionListView(ListView):
+    model = Recepcion
+    template_name='recepcion/recepcion.html'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -23,7 +25,7 @@ class ClienteListView(ListView):
             action= request.POST['action']
             if action == 'searchdata':
                 data=[]
-                for i in Cliente.objects.all():
+                for i in Recepcion.objects.all():
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -34,31 +36,29 @@ class ClienteListView(ListView):
     
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
-        context['title']='Lista de Clientes'
-        context['create_url']= reverse_lazy('general:ClienteCreateViewpath')
-        context['list_url']= reverse_lazy('general:ClienteListViewpath')
-        context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
+        context['title']='Lista de Recepciones'
+        context['create_url']= reverse_lazy('general:RecepcionCreateViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
+        context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
+        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
+        context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
         context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
-        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
-        context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
-        context['entity']= 'Clientes'
+        context['entity']= 'Recepcion'
         return context
 
-
-class ClienteCreateView(CreateView):
-    model=Cliente
-    form_class= ClienteForm
-    template_name='clientes/create.html'
-    success_url= reverse_lazy('general: ClienteListViewpath')
+class RecepcionCreateView(CreateView):
+    model=Recepcion
+    form_class= RecepcionForm
+    template_name='recepcion/create.html'
+    success_url= reverse_lazy('general:RecepcionListViewpath')
     
     def post(self, request, *args, **kwargs):
         data={}
         try:
             action= request.POST['action']
             if action == 'add':
-                form= ClienteForm(request.POST)
+                form= RecepcionForm(request.POST)
                 data= form.save()
             else:
                 data['error']='No ha ingresado a ninguna opcion'
@@ -68,24 +68,24 @@ class ClienteCreateView(CreateView):
     
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
-        context['title']='Creacion de un Cliente'
-        context['entity']= 'Clientes'
-        context['list_url']= reverse_lazy('general:ClienteListViewpath')
-        context['list_url_prod']= reverse_lazy('general:ClienteListViewpath')
-        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
+        context['title']='Creacion de una recepcion'
+        context['entity']= 'Recepcion'
+        context['list_url']= reverse_lazy('general:RecepcionListViewpath')
+        context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
-        context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
-        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
-
+        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
+        context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
+        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
         context['action']='add'
         return context
 
-class ClienteUpdateView(UpdateView):
-    model=Cliente
-    form_class= ClienteForm
-    template_name='clientes/create.html'
-    success_url= reverse_lazy('general:ClienteListViewpath')
+    
+class RecepcionUpdateView(UpdateView):
+    model=Recepcion
+    form_class= RecepcionForm
+    template_name='recepcion/create.html'
+    success_url= reverse_lazy('general:RecepcionListViewpath')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -93,15 +93,16 @@ class ClienteUpdateView(UpdateView):
     
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
-        context['title']='Edicion de un Cliente'
-        context['entity']= 'Clientes'
-        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
-        context['list_url']= reverse_lazy('general:ClienteListViewpath')
-        context['list_url_prod']= reverse_lazy('general:ClienteListViewpath')
-        context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
-        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
-        context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
+        context['title']='Edicion de una Recepcion'
+        context['entity']= 'Recepcion'
+        context['list_url']= reverse_lazy('general:RecepcionListViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
+        context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
+        context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
+        context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
+        context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
+        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
+
         context['action']='edit'
         return context
 

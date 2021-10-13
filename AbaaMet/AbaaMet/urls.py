@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 
+from login.views import LoginFormView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('general.urls')),
+    path('login/',LoginFormView.as_view()),
 ]

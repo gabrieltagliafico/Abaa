@@ -60,17 +60,17 @@ class Cliente(models.Model):
         return item
     
 class Recepcion(models.Model):
-    Paqueteria = 'PA'
-    AbaaRecogio = 'AB'
-    ClienteEntrego = 'CE'
+    Paqueteria = 'Paqueteria'
+    AbaaRecogio = 'Abaa Recogio'
+    ClienteEntrego = 'Cliente Entrego'
     modoChoices = [
         (Paqueteria, 'Paqueteria'),
         (AbaaRecogio, 'AbaaRecogio'),
         (ClienteEntrego, 'ClienteEntrego'),
     ]
-    Devuelto = 'DE'
-    Pendiente = 'PE'
-    Aprobado = 'AP'
+    Devuelto = 'Devuelto'
+    Pendiente = 'Pendiente'
+    Aprobado = 'Aprobado'
     estatusChoices = [
         (Devuelto, 'Devuelto'),
         (Pendiente, 'Pendiente'),

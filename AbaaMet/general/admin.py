@@ -7,3 +7,5 @@ admin.site.register(Sucursal),
 admin.site.register(Cliente),
 admin.site.register(Direccion),
 admin.site.register(Empresa),
+admin.site.register(Recepcion),
+

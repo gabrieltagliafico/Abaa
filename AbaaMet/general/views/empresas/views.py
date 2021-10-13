@@ -38,6 +38,7 @@ class EmpresaListView(ListView):
         context['title']='Lista de Empresas'
         context['create_url']= reverse_lazy('general:EmpresaCreateViewpath')
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
+        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
@@ -73,6 +74,7 @@ class EmpresaCreateView(CreateView):
         context['list_url_cli']= reverse_lazy('general:ClienteListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
+        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
         context['action']='add'
         return context
@@ -96,6 +98,7 @@ class EmpresaUpdateView(UpdateView):
         context['list_url_prod']= reverse_lazy('general:ProductoListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['list_url_serv']= reverse_lazy('general:ServicioListViewpath')
+        context['list_url_recep']= reverse_lazy('general:RecepcionListViewpath')
         context['list_url_emp']= reverse_lazy('general:EmpresaListViewpath')
         context['action']='edit'
         return context

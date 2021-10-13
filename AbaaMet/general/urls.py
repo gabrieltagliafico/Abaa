@@ -1,3 +1,5 @@
+from general.views.recepcion.views import RecepcionUpdateView
+from general.views.recepcion.views import RecepcionCreateView, RecepcionListView
 from general.views.empresas.views import *
 from general.views.direcciones.views import *
 from general.views.clientes.views import *
@@ -9,7 +11,6 @@ from general.views.productos.views import *
 app_name='general'
 
 urlpatterns = [
-   path('', login, name='login'),
    path('principal/', LandingListView.as_view() , name='LandingPath'),
    path('principal/servicios', ServicioListView.as_view(), name='ServicioListViewpath'),
    path('principal/servicios/create/', ServicioCreateView.as_view(), name='ServicioCreateViewpath'),
@@ -31,5 +32,8 @@ urlpatterns = [
    path('principal/empresas/create/', EmpresaCreateView.as_view(), name='EmpresaCreateViewpath'),
    path('principal/empresas/edit/<int:pk>/', EmpresaUpdateView.as_view(), name='EmpresaUpdateViewpath'),
 
+   path('principal/recepcion', RecepcionListView.as_view(), name='RecepcionListViewpath'),
+   path('principal/recepcion/create/', RecepcionCreateView.as_view(), name='RecepcionCreateViewpath'),
+   path('principal/recepcion/edit/<int:pk>/', RecepcionUpdateView.as_view(), name='RecepcionUpdateViewpath'),
 
 ]
