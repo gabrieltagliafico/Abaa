@@ -84,4 +84,13 @@ $(function() {
 
         }
     });
+    $("#myModal").modal({
+        modal: true,
+        buttons: {
+            Ok: function() {
+                $(this).modal("show");
+            }
+        }
+    });
+
 });

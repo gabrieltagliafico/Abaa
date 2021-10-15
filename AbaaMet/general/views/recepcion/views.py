@@ -1,5 +1,6 @@
 
 import json
+from django.contrib.auth.decorators import login_required
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
@@ -15,6 +16,7 @@ class RecepcionListView(ListView):
     model = Recepcion
     template_name='recepcion/recepcion.html'
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -25,7 +27,8 @@ class RecepcionListView(ListView):
             action= request.POST['action']
             if action == 'searchdata':
                 data=[]
-                for i in Recepcion.objects.all():
+                recepcion = Recepcion.objects.filter(estatus= 'Pendiente')
+                for i in recepcion:
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -52,6 +55,10 @@ class RecepcionCreateView(CreateView):
     form_class= RecepcionForm
     template_name='recepcion/create.html'
     success_url= reverse_lazy('general:RecepcionListViewpath')
+    
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def post(self, request, *args, **kwargs):
         data={}
@@ -87,6 +94,7 @@ class RecepcionUpdateView(UpdateView):
     template_name='recepcion/create.html'
     success_url= reverse_lazy('general:RecepcionListViewpath')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)

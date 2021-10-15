@@ -1,9 +1,12 @@
+import django
 from django.db import models
 from django.db.models.deletion import DO_NOTHING
 from django.db.models.fields import EmailField
+from django.db.models.fields.related import ForeignKey
+from django.db.utils import DJANGO_VERSION_PICKLE_KEY
 from django.forms.models import model_to_dict
 from django.shortcuts import render
-
+from django.utils import timezone
 # Create your models here.
 
 class Direccion(models.Model):
@@ -59,50 +62,6 @@ class Cliente(models.Model):
         item= model_to_dict(self)
         return item
     
-class Recepcion(models.Model):
-    Paqueteria = 'Paqueteria'
-    AbaaRecogio = 'Abaa Recogio'
-    ClienteEntrego = 'Cliente Entrego'
-    modoChoices = [
-        (Paqueteria, 'Paqueteria'),
-        (AbaaRecogio, 'AbaaRecogio'),
-        (ClienteEntrego, 'ClienteEntrego'),
-    ]
-    Devuelto = 'Devuelto'
-    Pendiente = 'Pendiente'
-    Aprobado = 'Aprobado'
-    estatusChoices = [
-        (Devuelto, 'Devuelto'),
-        (Pendiente, 'Pendiente'),
-        (Aprobado, 'Aprobado'),
-    ]
-
-
-    n_entrada = models.AutoField(primary_key=True,verbose_name='n_entrada')
-    nombre = models.CharField(max_length=50,verbose_name='nombre')
-    marca = models.CharField(max_length=50,verbose_name='marca')
-    modelo = models.CharField(max_length=50,verbose_name='model')
-    serie = models.CharField( verbose_name='detalle',max_length=15)
-    identificacion= models.CharField(verbose_name='identificacion',max_length=10)
-    descripcion_particular = models.CharField(verbose_name='descripcion_particular',max_length=25)
-    fecha_de_recepcion = models.DateField(verbose_name='fecha_de_recepcion')
-    modo=models.CharField(choices=modoChoices,max_length=15)
-    cliente= models.ForeignKey(Cliente,verbose_name='cliente',on_delete= DO_NOTHING)
-    estatus= models.CharField(choices=estatusChoices, max_length=15)
-    orden_compra= models.CharField(max_length=15, verbose_name='orden_ compra')
-    n_cotizacion= models.CharField(max_length=15)
-
-    def __str__(self):
-        return self.nombre
-    def toJSON(self):
-        item= model_to_dict(self)
-        return item
-    class Meta:
-        verbose_name='Recepciones'
-        verbose_name_plural='Recepciones'
-        db_table='g_recepcion'
-        ordering= ['n_entrada']
-
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50,verbose_name='nombre')
@@ -187,3 +146,75 @@ class Cotizaciones(models.Model):
 class Serv_Cot( models.Model):
     id_servicio= models.ForeignKey(Servicio,null=False, blank=False, on_delete=models.CASCADE)
     id_cotizacion= models.ForeignKey(Cotizaciones,null=False, blank=False, on_delete=models.CASCADE)
+
+
+
+class Recepcion(models.Model):
+    Paqueteria = 'Paqueteria'
+    AbaaRecogio = 'Abaa Recogio'
+    ClienteEntrego = 'Cliente Entrego'
+    modoChoices = [
+        (Paqueteria, 'Paqueteria'),
+        (AbaaRecogio, 'AbaaRecogio'),
+        (ClienteEntrego, 'ClienteEntrego'),
+    ]
+    Devuelto = 'Devuelto'
+    Pendiente = 'Pendiente'
+    Aprobado = 'Aprobado'
+    estatusChoices = [
+        (Devuelto, 'Devuelto'),
+        (Pendiente, 'Pendiente'),
+        (Aprobado, 'Aprobado'),
+    ]
+    
+
+    n_entrada = models.AutoField(primary_key=True,verbose_name='n_entrada')
+    nombre = models.CharField(max_length=50,verbose_name='nombre')
+    marca = models.CharField(max_length=50,verbose_name='marca')
+    modelo = models.CharField(max_length=50,verbose_name='model')
+    serie = models.CharField( verbose_name='detalle',max_length=15)
+    identificacion= models.CharField(verbose_name='identificacion',max_length=10)
+    descripcion_particular = models.CharField(verbose_name='descripcion_particular',max_length=25)
+    fecha_de_recepcion = models.DateField(verbose_name='fecha_de_recepcion',null=True)
+    modo=models.CharField(choices=modoChoices,max_length=15)
+    cliente= models.ForeignKey(Cliente,verbose_name='cliente',on_delete= DO_NOTHING)
+    estatus= models.CharField(choices=estatusChoices, max_length=15)
+    orden_compra= models.CharField(max_length=15, verbose_name='orden_ compra')
+    n_cotizacion= models.CharField(max_length=15,verbose_name='cotizacion')
+    
+
+    def save(self, *args,**kwargs):
+        self.fecha_de_recepcion = timezone.now()
+        return super(Recepcion, self).save(*args, **kwargs)
+    def __str__(self):
+        return self.nombre
+    def toJSON(self):
+        item= model_to_dict(self)
+        return item
+    class Meta:
+        verbose_name='Recepciones'
+        verbose_name_plural='Recepciones'
+        db_table='g_recepcion'
+        ordering= ['n_entrada']
+
+class Ingreso(models.Model):
+    Calibracion = 'Calibracion'
+    Calificacion = 'Calificacion'
+    servChoices = [
+        (Calibracion, 'Calibracion'),
+        (Calificacion, 'Calificacion'),
+    ]
+    id= models.AutoField(primary_key=True)
+    n_recepcion =models.ForeignKey(Recepcion, null=False, blank=False,verbose_name='n_entrada', on_delete=DO_NOTHING)
+    n_servicio = models.ForeignKey(Servicio,null=True,blank=True, on_delete=DO_NOTHING,verbose_name='servicio')
+    serv_prest = models.CharField(choices=servChoices, max_length=15,verbose_name='serv_prest')
+    fecha_ingreso = models.DateField(verbose_name='fecha_almacen')
+
+    def toJSON(self):
+        item= model_to_dict(self)
+        return item
+    class Meta:
+        verbose_name='Ingreso'
+        verbose_name_plural='Ingresos'
+        db_table='g_ingresos'
+        ordering= ['id']

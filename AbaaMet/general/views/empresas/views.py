@@ -1,4 +1,5 @@
 import json
+from django.contrib.auth.decorators import login_required
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
@@ -14,6 +15,7 @@ class EmpresaListView(ListView):
     model = Empresa
     template_name='empresas/empresas.html'
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -52,6 +54,11 @@ class EmpresaCreateView(CreateView):
     template_name='empresas/create.html'
     success_url= reverse_lazy('general:EmpresaListViewpath')
     
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+        
     def post(self, request, *args, **kwargs):
         data={}
         try:
@@ -85,6 +92,7 @@ class EmpresaUpdateView(UpdateView):
     template_name='empresas/create.html'
     success_url= reverse_lazy('general:EmpresaListViewpath')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)

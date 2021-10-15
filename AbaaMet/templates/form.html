@@ -21,8 +21,11 @@
             {% endfor %}
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary btn-flat btnTest">
+            <button type="submit" class="btn btn-primary btnTest">
                 <i class="fas fa-plus"></i> Guardar registro
+            </button>
+            <button type="button" onclick="history.back()" class="btn btn-danger">
+                <i class="fas fa-times"></i> Cancelar
             </button>
         </div>
     </div>
@@ -43,6 +46,7 @@
         icon: 'error',
     })
     '{% endif %}'
+
     $('form').on('submit', function(e) {
 
         e.preventDefault();
@@ -54,13 +58,14 @@
             dataType: 'json',
         }).done(function(data) {
             if (!data.hasOwnProperty('error')) {
-                Swal.fire(
-                    'Felicitaciones!',
-                    'Se ha agregado correctamente',
-                    'success'
-                )
+                Swal.fire({
+                    title: 'Felicitaciones!',
+                    text: 'Se ha agregado correctamente',
+                    icon: 'success',
+                    timer: 5000,
+                    showConfirmButton: true,
+                });
                 location.href = '{{ list_url }}';
-
                 return false;
             }
             message_errors(data.error);

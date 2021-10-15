@@ -1,12 +1,15 @@
 import json
 from django.http.response import JsonResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic.edit import DeleteView
 from general.models import *
 from general.forms import *
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -15,6 +18,7 @@ class ProductoListView(ListView):
     template_name='productos/productos.html'
 
     @method_decorator(csrf_exempt)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -24,7 +28,8 @@ class ProductoListView(ListView):
             action= request.POST['action']
             if action == 'searchdata':
                 data=[]
-                for i in Producto.objects.all():
+                Productos= Producto.objects.filter(activo = True)
+                for i in Productos:
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -53,6 +58,10 @@ class ProductoCreateView(CreateView):
     form_class= ProductoForm
     template_name='productos/createProduct.html'
     success_url= reverse_lazy('general: ProductoListViewpath')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def post(self, request, *args, **kwargs):
         data={}
@@ -87,6 +96,7 @@ class ProductoUpdateView(UpdateView):
     template_name='Productos/createProduct.html'
     success_url= reverse_lazy('general:ProductoListViewpath')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -117,4 +127,3 @@ class ProductoUpdateView(UpdateView):
         except Exception as e:
             data['error']= str(e)
         return JsonResponse(data)
-    

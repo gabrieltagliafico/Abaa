@@ -3,7 +3,6 @@ from general.views.recepcion.views import RecepcionCreateView, RecepcionListView
 from general.views.empresas.views import *
 from general.views.direcciones.views import *
 from general.views.clientes.views import *
-from general.views.login.views import login
 from django.urls import path
 from general.views.servicios.views import *
 from general.views.landing.views import *
@@ -19,6 +18,7 @@ urlpatterns = [
    path('principal/productos', ProductoListView.as_view(), name='ProductoListViewpath'),
    path('principal/productos/create/', ProductoCreateView.as_view(), name='ProductoCreateViewpath'),
    path('principal/productos/edit/<int:pk>/', ProductoUpdateView.as_view(), name='ProductoUpdateViewpath'),
+   
    
    path('principal/clientes', ClienteListView.as_view(), name='ClienteListViewpath'),
    path('principal/clientes/create/', ClienteCreateView.as_view(), name='ClienteCreateViewpath'),

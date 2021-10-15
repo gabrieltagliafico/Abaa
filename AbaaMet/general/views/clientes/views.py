@@ -1,18 +1,22 @@
 import json
+import django
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic.edit import DeleteView
 from general.models import *
 from general.forms import *
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
 class ClienteListView(ListView):
     model = Cliente
     template_name='clientes/clientes.html'
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -53,6 +57,10 @@ class ClienteCreateView(CreateView):
     template_name='clientes/create.html'
     success_url= reverse_lazy('general: ClienteListViewpath')
     
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         data={}
         try:
@@ -87,6 +95,7 @@ class ClienteUpdateView(UpdateView):
     template_name='clientes/create.html'
     success_url= reverse_lazy('general:ClienteListViewpath')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
@@ -117,4 +126,3 @@ class ClienteUpdateView(UpdateView):
         except Exception as e:
             data['error']= str(e)
         return JsonResponse(data)
-    

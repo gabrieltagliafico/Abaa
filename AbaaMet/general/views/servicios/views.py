@@ -1,5 +1,6 @@
 
 import json
+from django.contrib.auth.decorators import login_required
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
@@ -15,6 +16,7 @@ class ServicioListView(ListView):
     model = Servicio
     template_name='servicios/servicios.html'
 
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -25,7 +27,8 @@ class ServicioListView(ListView):
             action= request.POST['action']
             if action == 'searchdata':
                 data=[]
-                for i in Servicio.objects.all():
+                Servicios= Servicio.objects.filter(activo=True)
+                for i in Servicios:
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -52,6 +55,11 @@ class ServicioCreateView(CreateView):
     form_class= ServicioForm
     template_name='servicios/create.html'
     success_url= reverse_lazy('general:ServicioListViewpath')
+    
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def post(self, request, *args, **kwargs):
         data={}
@@ -86,6 +94,7 @@ class ServicioUpdateView(UpdateView):
     template_name='servicios/create.html'
     success_url= reverse_lazy('general:ServicioListViewpath')
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
