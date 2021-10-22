@@ -8,4 +8,6 @@ admin.site.register(Cliente),
 admin.site.register(Direccion),
 admin.site.register(Empresa),
 admin.site.register(Recepcion),
+admin.site.register(Ingreso),
+
 

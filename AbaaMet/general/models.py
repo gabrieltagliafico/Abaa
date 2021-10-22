@@ -1,9 +1,11 @@
+import json
 import django
 from django.db import models
 from django.db.models.deletion import DO_NOTHING
 from django.db.models.fields import EmailField
 from django.db.models.fields.related import ForeignKey
 from django.db.utils import DJANGO_VERSION_PICKLE_KEY
+from django.forms.fields import JSONString
 from django.forms.models import model_to_dict
 from django.shortcuts import render
 from django.utils import timezone

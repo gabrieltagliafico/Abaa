@@ -7,6 +7,7 @@ from django.urls import path
 from general.views.servicios.views import *
 from general.views.landing.views import *
 from general.views.productos.views import *
+from general.views.ingreso.views import *
 app_name='general'
 
 urlpatterns = [
@@ -35,5 +36,7 @@ urlpatterns = [
    path('principal/recepcion', RecepcionListView.as_view(), name='RecepcionListViewpath'),
    path('principal/recepcion/create/', RecepcionCreateView.as_view(), name='RecepcionCreateViewpath'),
    path('principal/recepcion/edit/<int:pk>/', RecepcionUpdateView.as_view(), name='RecepcionUpdateViewpath'),
+
+   path('principal/ingreso', IngresoListView.as_view(), name='IngresoListViewpath'),
 
 ]
