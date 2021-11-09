@@ -25,19 +25,8 @@ class IngresoListView(ListView):
             if action == 'searchdata':
                 data=[]
                 ingresos= Ingreso.objects.all()
-                recpciones = Recepcion.objects.all()
-                for r in ingresos:
-                    n_i= r.n_recepcion
-                    print('esto es n_i',n_i)
-                    for i in recpciones:
-                        print('Entre a recepciones',i)
-                        if (n_i == i):
-                            print('Entre al if',i.cliente)
-                            cliente= i.cliente
-                            print(r.n_recepcion)
-                    data.append(r.toJSON())
-                    # data.append(i.cliente.nombre_completo)
-                print(data)
+                for i in ingresos:
+                    data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
