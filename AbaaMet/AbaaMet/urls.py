@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from general.views.forbidden.views import ForbiddenView
 
 from login.views import LoginFormView
 
@@ -24,4 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('general/',include('general.urls')),
     path('',include('login.urls')),
+    path('forbidden/',ForbiddenView.as_view(),name='forbidden')
+
 ]

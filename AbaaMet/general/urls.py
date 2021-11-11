@@ -1,3 +1,4 @@
+from general.views.forbidden.views import ForbiddenView
 from general.views.recepcion.views import RecepcionUpdateView
 from general.views.recepcion.views import RecepcionCreateView, RecepcionListView
 from general.views.empresas.views import *
@@ -38,5 +39,4 @@ urlpatterns = [
    path('principal/recepcion/edit/<int:pk>/', RecepcionUpdateView.as_view(), name='RecepcionUpdateViewpath'),
 
    path('principal/ingreso', IngresoListView.as_view(), name='IngresoListViewpath'),
-
 ]

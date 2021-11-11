@@ -10,46 +10,30 @@
 <div class="card card-default p-3 m-3">
     <div class="card-header">
         <h1 class="card-title">
-            {{ title }}
+            {{ title }} / {{date_now}}
         </h1>
     </div>
     <div class="card-body">
         <table class="table" id="datatable">
             {% csrf_token %}
             <thead>
-                {% block columns %} {% endblock %}
+                {% block columns %} {% endblock columns %}
             </thead>
             <tbody>
-                {% block rows %} {% endblock %}
+                {% block rows %} {% endblock rows %}
             </tbody>
         </table>
     </div>
     <div class="card-footer">
+        {% block buttons_list %}
         <a href="{{ create_url }}" class="btn btn-primary btn-flat btnTest">
             <i class="fas fa-plus"></i> Nuevo registro
         </a>
+        {% endblock buttons_list %}
     </div>
+
 </div>
 {% endblock content %} {% block javascript %}
 <script src="{% static 'js/functions.js' %}"></script>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% endblock javascript %}

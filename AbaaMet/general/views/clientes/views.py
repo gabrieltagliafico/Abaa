@@ -4,19 +4,21 @@ from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
+from general.mixins import IsSuperuserMixin
 from general.models import *
 from general.forms import *
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 
-class ClienteListView(ListView):
+class ClienteListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
     model = Cliente
     template_name='clientes/clientes.html'
 
-    @method_decorator(login_required)
+    # @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -29,6 +31,14 @@ class ClienteListView(ListView):
                 data=[]
                 for i in Cliente.objects.all():
                     data.append(i.toJSON())
+            elif action == 'add':
+                cli = Cliente()
+                cli.nombre_completo = request.POST['nombre_completo']
+                cli.telefono = request.POST['telefono']
+                cli.telefono_ad = request.POST['telefono_ad']
+                cli.email = request.POST['email']
+                cli.id_sucursal = request.POST['id_sucursal']
+                cli.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -49,6 +59,7 @@ class ClienteListView(ListView):
         context['list_url_ingre']= reverse_lazy('general:IngresoListViewpath')
         context['list_url_dir']= reverse_lazy('general:DireccionesListViewpath')
         context['entity']= 'Clientes'
+        context['form']= ClienteForm()
         return context
 
 
