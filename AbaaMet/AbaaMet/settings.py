@@ -40,8 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'general',
     'login',
-    'widget_tweaks',
-    'user'
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -139,5 +138,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/general/principal'
 
 LOGIN_URL = '/'
-
-AUTH_USER_MODEL = 'user.User'
