@@ -1,19 +1,20 @@
 
 from typing import ContextManager
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls.base import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic.list import ListView
+from general.mixins import IsSuperuserMixin
 
 from general.models import *
 
 
-class LandingListView(ListView):
+class LandingListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
     model=Usuario
     template_name='landing/landing.html'
 
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 

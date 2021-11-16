@@ -4,7 +4,7 @@ from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
-from general.mixins import IsSuperuserMixin
+from general.mixins import IsSuperuserMixin,ValidatePermissionRequiredMixin
 from general.models import *
 from general.forms import *
 from django.urls import reverse_lazy
@@ -15,10 +15,10 @@ from django.contrib.auth.decorators import login_required
 
 
 class ClienteListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
+    permission_required= 'general.view_cliente'
     model = Cliente
     template_name='clientes/clientes.html'
-
-    # @method_decorator(login_required)
+    
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -63,13 +63,12 @@ class ClienteListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
         return context
 
 
-class ClienteCreateView(CreateView):
+class ClienteCreateView(LoginRequiredMixin,CreateView):
     model=Cliente
     form_class= ClienteForm
     template_name='clientes/create.html'
     success_url= reverse_lazy('general: ClienteListViewpath')
-    
-    @method_decorator(login_required)
+
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -102,7 +101,7 @@ class ClienteCreateView(CreateView):
         context['action']='add'
         return context
 
-class ClienteUpdateView(UpdateView):
+class ClienteUpdateView(LoginRequiredMixin,UpdateView):
     model=Cliente
     form_class= ClienteForm
     template_name='clientes/create.html'

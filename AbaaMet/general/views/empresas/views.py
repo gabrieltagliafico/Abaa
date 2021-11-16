@@ -1,8 +1,10 @@
 import json
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
+from general.mixins import IsSuperuserMixin
 from general.models import *
 from general.forms import *
 from django.urls import reverse_lazy
@@ -11,11 +13,10 @@ from django.utils.decorators import method_decorator
 
 
 
-class EmpresaListView(ListView):
+class EmpresaListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
     model = Empresa
     template_name='empresas/empresas.html'
 
-    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -49,14 +50,13 @@ class EmpresaListView(ListView):
         context['entity']= 'Empresas'
         return context
 
-class EmpresaCreateView(CreateView):
+class EmpresaCreateView(LoginRequiredMixin,CreateView):
     model=Empresa
     form_class= EmpresaForm
     template_name='empresas/create.html'
     success_url= reverse_lazy('general:EmpresaListViewpath')
     
 
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
         
@@ -88,13 +88,12 @@ class EmpresaCreateView(CreateView):
         context['action']='add'
         return context
 
-class EmpresaUpdateView(UpdateView):
+class EmpresaUpdateView(LoginRequiredMixin,UpdateView):
     model=Empresa
     form_class= EmpresaForm
     template_name='empresas/create.html'
     success_url= reverse_lazy('general:EmpresaListViewpath')
 
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)

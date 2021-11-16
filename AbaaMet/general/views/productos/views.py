@@ -1,8 +1,10 @@
 import json
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
+from general.mixins import IsSuperuserMixin
 from general.models import *
 from general.forms import *
 from django.urls import reverse_lazy
@@ -13,12 +15,11 @@ from django.contrib.auth.decorators import login_required
 
 
 
-class ProductoListView(ListView):
+class ProductoListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
     model = Producto
     template_name='productos/productos.html'
 
     @method_decorator(csrf_exempt)
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -54,13 +55,12 @@ class ProductoListView(ListView):
         return context
 
 
-class ProductoCreateView(CreateView):
+class ProductoCreateView(LoginRequiredMixin,CreateView):
     model=Producto
     form_class= ProductoForm
     template_name='productos/createProduct.html'
     success_url= reverse_lazy('general: ProductoListViewpath')
 
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
@@ -91,13 +91,12 @@ class ProductoCreateView(CreateView):
         context['action']='add'
         return context
 
-class ProductoUpdateView(UpdateView):
+class ProductoUpdateView(LoginRequiredMixin,UpdateView):
     model=Producto
     form_class= ProductoForm
     template_name='Productos/createProduct.html'
     success_url= reverse_lazy('general:ProductoListViewpath')
 
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)

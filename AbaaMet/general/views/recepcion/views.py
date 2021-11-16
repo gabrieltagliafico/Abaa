@@ -1,9 +1,11 @@
 
 import json
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView
+from general.mixins import IsSuperuserMixin
 from general.models import *
 from general.forms import *
 from django.urls import reverse_lazy
@@ -12,11 +14,10 @@ from django.utils.decorators import method_decorator
 
 
 
-class RecepcionListView(ListView):
+class RecepcionListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
     model = Recepcion
     template_name='recepcion/recepcion.html'
 
-    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -51,13 +52,12 @@ class RecepcionListView(ListView):
         context['entity']= 'Recepcion'
         return context
 
-class RecepcionCreateView(CreateView):
+class RecepcionCreateView(LoginRequiredMixin,CreateView):
     model=Recepcion
     form_class= RecepcionForm
     template_name='recepcion/create.html'
     success_url= reverse_lazy('general:RecepcionListViewpath')
     
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
@@ -89,13 +89,12 @@ class RecepcionCreateView(CreateView):
         return context
 
     
-class RecepcionUpdateView(UpdateView):
+class RecepcionUpdateView(LoginRequiredMixin,UpdateView):
     model=Recepcion
     form_class= RecepcionForm
     template_name='recepcion/create.html'
     success_url= reverse_lazy('general:RecepcionListViewpath')
 
-    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
