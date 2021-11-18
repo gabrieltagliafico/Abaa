@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 
 class ClienteListView(LoginRequiredMixin,IsSuperuserMixin,ListView):
-    permission_required= 'general.view_cliente'
+    permission_required= ('general.view_cliente','general.add_cliente')
     model = Cliente
     template_name='clientes/clientes.html'
     
