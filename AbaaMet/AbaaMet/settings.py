@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'phonenumber_field',
-    'general'
+    'general',
+    'login',
+    'widget_tweaks',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +59,7 @@ ROOT_URLCONF = 'AbaaMet.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates'), os.path.join(BASE_DIR,'general/templates'),os.path.join(BASE_DIR,'login/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +85,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'gabriel20',
         'HOST': '127.0.0.1',
-        'DATABASE_PORT': '5050',
+        'DATABASE_PORT': '5432',
     }
 }
 
@@ -125,7 +128,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS= [
+    os.path.join(BASE_DIR,"static"),
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/general/principal'
+
+LOGIN_URL = '/'
+
+AUTH_USER_MODEL = 'user.User'
